@@ -44,6 +44,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main(modifier: Modifier = Modifier) {
+    val buttons = listOf(
+        "-" to {},
+        "÷" to {},
+        "×" to {},
+        "+" to {},
+    )
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF2D2D2D)
@@ -54,56 +61,20 @@ fun Main(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .padding(bottom = 20.dp)
         ) {
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(50),
-                modifier = Modifier
-                    .width(85.dp)
-                    .height(85.dp)
-            ) {
-                Text(
-                    text = "-",
-                    fontSize = 40.sp
-                )
+            buttons.forEach { (label, action) ->
+                Button(
+                    onClick = action,
+                    shape = RoundedCornerShape(25),
+                    modifier = Modifier
+                        .width(85.dp)
+                        .height(85.dp)
+                ) {
+                    Text(
+                        text = label,
+                        fontSize = 40.sp
+                    )
+                }
             }
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(50),
-                modifier = Modifier
-                    .width(85.dp)
-                    .height(85.dp)
-
-            ) {
-                Text(
-                    text = "÷",
-                    fontSize = 40.sp
-                )
-            }
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(50),
-                modifier = Modifier
-                    .width(85.dp)
-                    .height(85.dp)
-            ) {
-                Text(
-                    text = "×",
-                    fontSize = 40.sp
-                )
-            }
-            Button(
-                onClick = {},
-                shape = RoundedCornerShape(50),
-                modifier = Modifier
-                    .width(85.dp)
-                    .height(85.dp)
-            ) {
-                Text(
-                    text = "+",
-                    fontSize = 40.sp
-                )
-            }
-
         }
     }
 }
