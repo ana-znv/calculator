@@ -60,7 +60,7 @@ fun Main(modifier: Modifier = Modifier) {
     val numbers: Array<IntArray> = arrayOf(
         intArrayOf(7, 8, 9),
         intArrayOf(4, 5, 6),
-        intArrayOf(1, 2, 3)
+        intArrayOf(0, 1, 2, 3)
     )
 
     Surface(
@@ -95,20 +95,67 @@ fun Main(modifier: Modifier = Modifier) {
             }
             LazyRow(
                 horizontalArrangement = Arrangement.End,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 10.dp)
             ) {
                 items(numbers[0].size) { index ->
                     Button(
-                        onClick = {  },
+                        onClick = { },
                         shape = RoundedCornerShape(25),
                         modifier = Modifier
                             .width(85.dp)
                             .height(85.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD9AD26))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
                     ) {
                         Text(
-                            text = (index + 1).toString(),
+                            text = numbers[0][index].toString(),
+                            fontSize = 40.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(15.dp))
+                }
+            }
+            LazyRow(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+            ) {
+                items(numbers[1].size) { index ->
+                    Button(
+                        onClick = { },
+                        shape = RoundedCornerShape(25),
+                        modifier = Modifier
+                            .width(85.dp)
+                            .height(85.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
+                    ) {
+                        Text(
+                            text = numbers[1][index].toString(),
+                            fontSize = 40.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(15.dp))
+                }
+            }
+            LazyRow(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+            ) {
+                items(numbers[2].size) { index ->
+                    Button(
+                        onClick = { },
+                        shape = RoundedCornerShape(25),
+                        modifier = Modifier
+                            .width(85.dp)
+                            .height(85.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
+                    ) {
+                        Text(
+                            text = numbers[2][index].toString(),
                             fontSize = 40.sp
                         )
                     }
