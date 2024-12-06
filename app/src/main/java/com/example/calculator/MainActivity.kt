@@ -1,10 +1,13 @@
 package com.example.calculator
 
 import android.os.Bundle
+import android.sax.TextElementListener
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
@@ -27,8 +31,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calculator.ui.theme.CalculatorTheme
@@ -52,33 +59,59 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Main(modifier: Modifier = Modifier) {
-    Column {
-        FieldScreen()
+    Column(
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        var input by remember {
+            mutableStateOf("")
+        }
+        FieldScreen(
+            value = input,
+            onValueChange = { newValue ->
+                if (newValue.all { it.isDigit() || it == '.' }) {
+                    input = newValue
+                }
+            }
+        )
         ButtonsScreen()
     }
 }
 
 @Composable
-fun FieldScreen() {
-    var text by remember {
-        mutableStateOf("")
-    }
-    Surface(
+fun FieldScreen(value: String, onValueChange: (String) -> Unit) {
+    BasicTextField(
+        value = value,
+        onValueChange = onValueChange,
         modifier = Modifier
-            .fillMaxHeight(0.5f)
-            .fillMaxWidth(),
-        color = Color(0xFF2D2D2D)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxHeight(),
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            OutlinedTextField(value = text, onValueChange = { i ->
-                text = i
-            })
+            .background(Color(0xFF2D2D2D))
+            .padding(top = 400.dp),
+        singleLine = true,
+        textStyle = TextStyle(
+            fontSize = 50.sp,
+            textAlign = TextAlign.End,
+            color = Color(0xFFDDDDDD)
+        ),
+        decorationBox = { innerTextField ->
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.BottomEnd
+            ) {
+                if (value.isEmpty()) {
+                    Text(
+                        text = "0",
+                        style = TextStyle(
+                            fontSize = 32.sp,
+                            textAlign = TextAlign.End,
+                            color = Color.Gray
+                        )
+                    )
+                }
+                innerTextField()
+            }
         }
-    }
+    )
 }
 
 @Composable
