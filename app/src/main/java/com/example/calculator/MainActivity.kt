@@ -62,17 +62,6 @@ fun Main(modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.Bottom
     ) {
-        var input by remember {
-            mutableStateOf("")
-        }
-        FieldScreen(
-            value = input,
-            onValueChange = { newValue ->
-                if (newValue.all { it.isDigit() || it == '.' }) {
-                    input = newValue
-                }
-            }
-        )
         ButtonsScreen()
     }
 }
@@ -102,7 +91,7 @@ fun FieldScreen(value: String, onValueChange: (String) -> Unit) {
                     Text(
                         text = "0",
                         style = TextStyle(
-                            fontSize = 32.sp,
+                            fontSize = 50.sp,
                             textAlign = TextAlign.End,
                             color = Color.Gray
                         )
@@ -116,11 +105,15 @@ fun FieldScreen(value: String, onValueChange: (String) -> Unit) {
 
 @Composable
 fun ButtonsScreen(modifier: Modifier = Modifier) {
+    var text by remember {
+        mutableStateOf("")
+    }
+
     val buttons = listOf(
-        "-" to {},
-        "÷" to {},
-        "×" to {},
-        "+" to {},
+        "-" to { text = "-" },
+        "÷" to { text = "÷" },
+        "×" to { text = "×" },
+        "+" to { text = "+" },
     )
 
     val numbers: Array<IntArray> = arrayOf(
@@ -139,6 +132,13 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(bottom = 35.dp)
         ) {
+            FieldScreen(
+                value = text,
+                onValueChange = { text = it }
+            )
+            
+            Spacer(modifier = Modifier.height(20.dp))
+
             Row(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 modifier = Modifier.fillMaxWidth()
