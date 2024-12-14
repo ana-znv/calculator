@@ -39,6 +39,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calculator.ui.theme.CalculatorTheme
+import java.io.Serializable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,21 +106,37 @@ fun FieldScreen(value: String, onValueChange: (String) -> Unit) {
 
 @Composable
 fun ButtonsScreen(modifier: Modifier = Modifier) {
+    var operator by remember {
+        mutableStateOf("")
+    }
+
     var text by remember {
         mutableStateOf("")
     }
 
     val buttons = listOf(
-        "-" to { text = "-" },
-        "÷" to { text = "÷" },
-        "×" to { text = "×" },
-        "+" to { text = "+" },
+        "-" to { operator = "-" },
+        "÷" to { operator = "÷" },
+        "×" to { operator = "×" },
+        "+" to { operator = "+" },
     )
 
-    val numbers: Array<IntArray> = arrayOf(
-        intArrayOf(7, 8, 9),
-        intArrayOf(4, 5, 6),
-        intArrayOf(0, 1, 2, 3)
+    val numbers: Array<List<Pair<String, () -> Unit>>> = arrayOf(
+        listOf(
+            "7" to {text += "7"},
+            "8" to {text += "8"},
+            "9" to {text += "9"}
+        ),
+        listOf(
+            "4" to { text += "4" },
+            "5" to { text += "5" },
+            "6" to { text += "6" }
+        ),
+        listOf(
+            "0" to { text += "0" },
+            "1" to { text += "1" },
+            "2" to { text += "2" },
+            "3" to { text += "3" })
     )
 
     Surface(
@@ -133,10 +150,10 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 35.dp)
         ) {
             FieldScreen(
-                value = text,
+                value = text + operator,
                 onValueChange = { text = it }
             )
-            
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Row(
@@ -166,8 +183,9 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                     .padding(top = 10.dp)
             ) {
                 items(numbers[0].size) { index ->
+                    val (label, action) = numbers[0][index]
                     Button(
-                        onClick = { },
+                        onClick = action,
                         shape = RoundedCornerShape(25),
                         modifier = Modifier
                             .width(85.dp)
@@ -175,7 +193,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
                     ) {
                         Text(
-                            text = numbers[0][index].toString(),
+                            text = label,
                             fontSize = 40.sp
                         )
                     }
@@ -189,8 +207,9 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                     .padding(top = 10.dp)
             ) {
                 items(numbers[1].size) { index ->
+                    val (label, action) = numbers[1][index]
                     Button(
-                        onClick = { },
+                        onClick = action,
                         shape = RoundedCornerShape(25),
                         modifier = Modifier
                             .width(85.dp)
@@ -198,7 +217,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
                     ) {
                         Text(
-                            text = numbers[1][index].toString(),
+                            text = label,
                             fontSize = 40.sp
                         )
                     }
@@ -212,8 +231,9 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                     .padding(top = 10.dp)
             ) {
                 items(numbers[2].size) { index ->
+                    val (label, action) = numbers[2][index]
                     Button(
-                        onClick = { },
+                        onClick = action,
                         shape = RoundedCornerShape(25),
                         modifier = Modifier
                             .width(85.dp)
@@ -221,7 +241,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
                     ) {
                         Text(
-                            text = numbers[2][index].toString(),
+                            text = label,
                             fontSize = 40.sp
                         )
                     }
