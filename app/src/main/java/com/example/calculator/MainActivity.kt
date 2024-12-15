@@ -131,6 +131,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 firstValue = ""
                 secondValue = ""
                 operator = ""
+                result = 0
             },
             "7" to { if (operator.isEmpty()) firstValue += "7" else secondValue += "7" },
             "8" to { if (operator.isEmpty()) firstValue += "8" else secondValue += "8" },
