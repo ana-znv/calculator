@@ -127,7 +127,11 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
 
     val numbers: Array<List<Pair<String, () -> Unit>>> = arrayOf(
         listOf(
-            "←" to {},
+            "←" to {
+                firstValue = ""
+                secondValue = ""
+                operator = ""
+            },
             "7" to { if (operator.isEmpty()) firstValue += "7" else secondValue += "7" },
             "8" to { if (operator.isEmpty()) firstValue += "8" else secondValue += "8" },
             "9" to { if (operator.isEmpty()) firstValue += "9" else secondValue += "9" }
