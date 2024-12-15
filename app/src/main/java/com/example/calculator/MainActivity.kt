@@ -124,21 +124,22 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
     val numbers: Array<List<Pair<String, () -> Unit>>> = arrayOf(
         listOf(
             "←" to {},
-            "7" to { firstValue += "7" },
-            "8" to { firstValue += "8" },
-            "9" to { firstValue += "9" }
+            "7" to { if (operator.isEmpty()) firstValue += "7" else secondValue += "7" },
+            "8" to { if (operator.isEmpty()) firstValue += "8" else secondValue += "8" },
+            "9" to { if (operator.isEmpty()) firstValue += "9" else secondValue += "9" }
         ),
         listOf(
             "=" to {},
-            "4" to { firstValue += "4" },
-            "5" to { firstValue += "5" },
-            "6" to { firstValue += "6" }
+            "4" to { if (operator.isEmpty()) firstValue += "4" else secondValue += "4" },
+            "5" to { if (operator.isEmpty()) firstValue += "5" else secondValue += "5" },
+            "6" to { if (operator.isEmpty()) firstValue += "6" else secondValue += "6" }
         ),
         listOf(
-            "0" to { firstValue += "0" },
-            "1" to { firstValue += "1" },
-            "2" to { firstValue += "2" },
-            "3" to { firstValue += "3" })
+            "0" to { if (operator.isEmpty()) firstValue += "0" else secondValue += "0" },
+            "1" to { if (operator.isEmpty()) firstValue += "1" else secondValue += "1" },
+            "2" to { if (operator.isEmpty()) firstValue += "2" else secondValue += "2" },
+            "3" to { if (operator.isEmpty()) firstValue += "3" else secondValue += "3" }
+        )
     )
 
     Surface(
@@ -152,7 +153,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 35.dp)
         ) {
             FieldScreen(
-                value = firstValue + operator,
+                value = firstValue + operator + secondValue,
                 onValueChange = { firstValue = it }
             )
 
@@ -192,7 +193,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .width(85.dp)
                             .height(85.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF484848))
                     ) {
                         Text(
                             text = label,
@@ -216,7 +217,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .width(85.dp)
                             .height(85.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF484848))
                     ) {
                         Text(
                             text = label,
@@ -240,7 +241,7 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .width(85.dp)
                             .height(85.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2D993C))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF484848))
                     ) {
                         Text(
                             text = label,
