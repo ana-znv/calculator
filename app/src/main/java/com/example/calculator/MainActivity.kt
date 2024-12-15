@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -69,8 +70,7 @@ fun FieldScreen(value: String, onValueChange: (String) -> Unit) {
         value = value,
         onValueChange = onValueChange,
         modifier = Modifier
-            .background(Color(0xFF2D2D2D))
-            .padding(top = 400.dp),
+            .background(Color(0xFF2D2D2D)),
         singleLine = true,
         textStyle = TextStyle(
             fontSize = 50.sp,
@@ -114,6 +114,10 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
         mutableStateOf("")
     }
 
+    var result by remember {
+        mutableIntStateOf(0)
+    }
+
     val buttons = listOf(
         "-" to { operator = "-" },
         "÷" to { operator = "÷" },
@@ -129,7 +133,14 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
             "9" to { if (operator.isEmpty()) firstValue += "9" else secondValue += "9" }
         ),
         listOf(
-            "=" to {},
+            "=" to {
+                when (operator) {
+                    "+" -> result = firstValue.toInt() + secondValue.toInt()
+                    "×" -> result = firstValue.toInt() * secondValue.toInt()
+                    "÷" -> result = firstValue.toInt() / secondValue.toInt()
+                    "-" -> result = firstValue.toInt() - secondValue.toInt()
+                }
+            },
             "4" to { if (operator.isEmpty()) firstValue += "4" else secondValue += "4" },
             "5" to { if (operator.isEmpty()) firstValue += "5" else secondValue += "5" },
             "6" to { if (operator.isEmpty()) firstValue += "6" else secondValue += "6" }
@@ -152,6 +163,16 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(bottom = 35.dp)
         ) {
+            Text(
+                text = result.toString(),
+                style = TextStyle(
+                    fontSize = 60.sp,
+                    color = Color.Gray,
+                ),
+                modifier = Modifier
+                    .padding(start = 20.dp,bottom = 170.dp)
+            )
+            
             FieldScreen(
                 value = firstValue + operator + secondValue,
                 onValueChange = { firstValue = it }
