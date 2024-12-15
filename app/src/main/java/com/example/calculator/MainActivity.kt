@@ -1,7 +1,6 @@
 package com.example.calculator
 
 import android.os.Bundle
-import android.sax.TextElementListener
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -39,7 +36,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.calculator.ui.theme.CalculatorTheme
-import java.io.Serializable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,7 +106,11 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
         mutableStateOf("")
     }
 
-    var text by remember {
+    var firstValue by remember {
+        mutableStateOf("")
+    }
+
+    var secondValue by remember {
         mutableStateOf("")
     }
 
@@ -123,20 +123,22 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
 
     val numbers: Array<List<Pair<String, () -> Unit>>> = arrayOf(
         listOf(
-            "7" to {text += "7"},
-            "8" to {text += "8"},
-            "9" to {text += "9"}
+            "←" to {},
+            "7" to { firstValue += "7" },
+            "8" to { firstValue += "8" },
+            "9" to { firstValue += "9" }
         ),
         listOf(
-            "4" to { text += "4" },
-            "5" to { text += "5" },
-            "6" to { text += "6" }
+            "=" to {},
+            "4" to { firstValue += "4" },
+            "5" to { firstValue += "5" },
+            "6" to { firstValue += "6" }
         ),
         listOf(
-            "0" to { text += "0" },
-            "1" to { text += "1" },
-            "2" to { text += "2" },
-            "3" to { text += "3" })
+            "0" to { firstValue += "0" },
+            "1" to { firstValue += "1" },
+            "2" to { firstValue += "2" },
+            "3" to { firstValue += "3" })
     )
 
     Surface(
@@ -150,8 +152,8 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .padding(bottom = 35.dp)
         ) {
             FieldScreen(
-                value = text + operator,
-                onValueChange = { text = it }
+                value = firstValue + operator,
+                onValueChange = { firstValue = it }
             )
 
             Spacer(modifier = Modifier.height(20.dp))
