@@ -138,7 +138,6 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 firstValue = ""
                 secondValue = ""
                 operator = ""
-                result = 0
             },
             "7" to { if (operator.isEmpty()) firstValue += "7" else secondValue += "7" },
             "8" to { if (operator.isEmpty()) firstValue += "8" else secondValue += "8" },
@@ -152,6 +151,9 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                     "÷" -> result = firstValue.toInt() / secondValue.toInt()
                     "-" -> result = firstValue.toInt() - secondValue.toInt()
                 }
+                operator = ""
+                secondValue = ""
+                firstValue = result.toString()
             },
             "4" to { if (operator.isEmpty()) firstValue += "4" else secondValue += "4" },
             "5" to { if (operator.isEmpty()) firstValue += "5" else secondValue += "5" },
@@ -165,6 +167,8 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
         )
     )
 
+    var res = firstValue + operator + secondValue
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color(0xFF2D2D2D)
@@ -175,18 +179,8 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .padding(bottom = 35.dp)
         ) {
-            Text(
-                text = result.toString(),
-                style = TextStyle(
-                    fontSize = 60.sp,
-                    color = Color.Gray,
-                ),
-                modifier = Modifier
-                    .padding(start = 20.dp,bottom = 170.dp)
-            )
-            
             FieldScreen(
-                value = firstValue + operator + secondValue,
+                value = res,
                 onValueChange = { secondValue = it }
             )
 
