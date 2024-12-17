@@ -67,7 +67,14 @@ fun ButtonsScreen(modifier: Modifier = Modifier) {
                 when (operator) {
                     "+" -> result = firstValue.toInt() + secondValue.toInt()
                     "×" -> result = firstValue.toInt() * secondValue.toInt()
-                    "÷" -> result = firstValue.toInt() / secondValue.toInt()
+                    "÷" -> {
+                        result = if (secondValue != "0") {
+                            firstValue.toInt() / secondValue.toInt()
+                        } else {
+                            0
+                        }
+
+                    }
                     "-" -> result = firstValue.toInt() - secondValue.toInt()
                 }
                 operator = ""
